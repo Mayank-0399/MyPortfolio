@@ -222,8 +222,7 @@ function App() {
               </span>
 
               <p className="mt-5 text-lg leading-7 text-zinc-700">
-                problems solved across LeetCode, Codeforces, and GeeksforGeeks with a
-                current LeetCode contest rating of <span className="font-semibold">1490</span>.
+                problems solved across LeetCode, Codeforces, and GeeksforGeeks 
               </p>
             </div>
 
