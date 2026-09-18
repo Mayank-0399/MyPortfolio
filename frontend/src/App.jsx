@@ -1,6 +1,8 @@
 import { motion, useScroll, useSpring } from "framer-motion";
-import { ArrowDown, ArrowUpRight, Code2, Github, Mail, MapPin, Server, TerminalSquare } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Code2, Github, Linkedin, Mail, MapPin, Server, TerminalSquare } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import CodeforcesWidget from "./components/CodeforcesWidget.jsx";
+import LeetcodeWidget from "./components/LeetcodeWidget.jsx";
 
 const fallbackPortfolio = {
   name: "Mayank Singh",
@@ -20,7 +22,6 @@ const fallbackPortfolio = {
     "Python",
     "JavaScript",
     "TypeScript",
-    "Python",
     "REST APIs",
     "Authentication",
     "AI/RAG",
@@ -69,6 +70,7 @@ function SectionHeading({ kicker, title, align = "left", tone = "light" }) {
 
 function App() {
   const [portfolio, setPortfolio] = useState(fallbackPortfolio);
+  const [activePlatform, setActivePlatform] = useState("codeforces");
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 100, damping: 24 });
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5050";
@@ -82,7 +84,7 @@ function App() {
 
   const projects = useMemo(() => {
     const realProjects = portfolio.projects?.length ? portfolio.projects : fallbackPortfolio.projects;
-    return realProjects.slice(0, 5);
+    return realProjects;
   }, [portfolio.projects]);
 
   const scrollToProjects = () => {
@@ -106,6 +108,15 @@ function App() {
           <div className="flex items-center gap-2">
             <a className="grid size-11 place-items-center rounded-full border border-zinc-300 transition hover:bg-zinc-950 hover:text-white" href={portfolio.github} aria-label="GitHub profile">
               <Github size={20} />
+            </a>
+            <a
+              className="grid size-11 place-items-center rounded-full border border-zinc-300 transition hover:bg-zinc-950 hover:text-white"
+              href={portfolio.contact.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn profile"
+            >
+              <Linkedin size={20} />
             </a>
             <a className="grid size-11 place-items-center rounded-full border border-zinc-300 transition hover:bg-zinc-950 hover:text-white" href={`mailto:${portfolio.contact.email}`} aria-label="Email Mayank">
               <Mail size={20} />
@@ -216,17 +227,70 @@ function App() {
               strategies while improving speed and accuracy under time constraints.
             </motion.p>
 
-            <div className="rounded-3xl border border-zinc-300 bg-orange-50 p-7">
-              <span className="text-6xl font-black text-red-800">
-                1000+
-              </span>
+            <div className="rounded-3xl border border-zinc-300 bg-orange-50 p-7 flex flex-col justify-between">
+              <div>
+                <span className="text-6xl font-black text-red-800">
+                  1200+
+                </span>
 
-              <p className="mt-5 text-lg leading-7 text-zinc-700">
-                problems solved across LeetCode, Codeforces, and GeeksforGeeks 
-              </p>
+                <p className="mt-5 text-lg leading-7 text-zinc-700">
+                  problems solved across LeetCode, Codeforces, and GeeksforGeeks 
+                </p>
+              </div>
+
+              <div className="mt-6 pt-5 border-t border-orange-200/80 flex flex-wrap items-center justify-between gap-2 text-xs font-bold uppercase tracking-wider text-orange-950">
+                <span>Codeforces: 1453 (Specialist)</span>
+                <span>LeetCode: 1853 (Top 6.3%)</span>
+              </div>
             </div>
 
           </div>
+
+          {/* Platform Switcher Tabs */}
+          <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
+            <div className="inline-flex rounded-full border border-zinc-300 bg-stone-100 p-1.5 shadow-sm">
+              <button
+                type="button"
+                onClick={() => setActivePlatform("codeforces")}
+                className={`flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-black uppercase tracking-[0.12em] transition-all ${
+                  activePlatform === "codeforces"
+                    ? "bg-zinc-950 text-white shadow"
+                    : "text-zinc-600 hover:text-zinc-950 hover:bg-stone-200/60"
+                }`}
+              >
+                <span>Codeforces</span>
+                <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${activePlatform === "codeforces" ? "bg-cyan-500 text-zinc-950" : "bg-zinc-200 text-zinc-700"}`}>
+                  1453
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActivePlatform("leetcode")}
+                className={`flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-black uppercase tracking-[0.12em] transition-all ${
+                  activePlatform === "leetcode"
+                    ? "bg-zinc-950 text-white shadow"
+                    : "text-zinc-600 hover:text-zinc-950 hover:bg-stone-200/60"
+                }`}
+              >
+                <span>LeetCode</span>
+                <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${activePlatform === "leetcode" ? "bg-amber-500 text-zinc-950" : "bg-zinc-200 text-zinc-700"}`}>
+                  1853
+                </span>
+              </button>
+            </div>
+
+            <div className="text-xs font-semibold text-zinc-500">
+              {activePlatform === "codeforces" ? (
+                <span>Specialist • 705+ Solved</span>
+              ) : (
+                <span>Top 6.3% Globally • 501+ Solved (173 Hard)</span>
+              )}
+            </div>
+          </div>
+
+          {/* Active Platform Widget */}
+          {activePlatform === "codeforces" ? <CodeforcesWidget /> : <LeetcodeWidget />}
         </div>
       </section>
 
@@ -274,10 +338,11 @@ function App() {
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {projects.map((project, index) => {
               const Icon = projectIcons[index] || Github;
+              const hasLiveApp = Boolean(project.liveUrl && project.liveUrl !== project.href);
               return (
                 <motion.article
                   className="group flex overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm transition hover:-translate-y-2 hover:border-zinc-950 hover:shadow-xl"
-                  key={project.repo}
+                  key={project.repo || project.name}
                   initial={{ opacity: 0, y: 36 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
@@ -286,10 +351,10 @@ function App() {
                   <div className="flex w-full flex-col">
                     <a
                       className="relative block aspect-[16/10] overflow-hidden bg-zinc-100"
-                      href={project.liveUrl || project.href}
+                      href={hasLiveApp ? project.liveUrl : project.href}
                       target="_blank"
                       rel="noreferrer"
-                      aria-label={`Open live app for ${project.name}`}
+                      aria-label={`${hasLiveApp ? "Open live app" : "Open repository"} for ${project.name}`}
                     >
                       <img
                         className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
@@ -297,7 +362,7 @@ function App() {
                         alt={`${project.name} project preview`}
                       />
                       <span className="absolute right-4 top-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-zinc-950 shadow-lg">
-                        Live <ArrowUpRight size={15} />
+                        {hasLiveApp ? "Live" : "Repo"} <ArrowUpRight size={15} />
                       </span>
                     </a>
 
@@ -335,14 +400,16 @@ function App() {
                               Repository
                             </a>
 
-                            <a
-                              className="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-4 py-3 text-sm font-bold transition hover:border-zinc-950"
-                              href={project.liveUrl || project.href}
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              Open App <ArrowUpRight size={17} />
-                            </a>
+                            {hasLiveApp && (
+                              <a
+                                className="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-4 py-3 text-sm font-bold transition hover:border-zinc-950"
+                                href={project.liveUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                Open App <ArrowUpRight size={17} />
+                              </a>
+                            )}
                           </>
                         )}
 
@@ -359,7 +426,7 @@ function App() {
       <section className="border-t border-zinc-800 bg-zinc-950 px-5 py-20 text-white sm:px-8 lg:px-12" id="contact">
         <div className="mx-auto max-w-7xl">
           <SectionHeading kicker="Contact" title="Let's build something useful." align="right" tone="dark" />
-          <div className="grid overflow-hidden rounded-3xl border border-white/10 sm:grid-cols-3">
+          <div className="grid overflow-hidden rounded-3xl border border-white/10 sm:grid-cols-4">
             <a className="flex min-h-28 items-center gap-3 bg-white/5 p-6 transition hover:bg-white hover:text-zinc-950" href={`mailto:${portfolio.contact.email}`}>
               <Mail size={22} />
               <span className="break-all">{portfolio.contact.email}</span>
@@ -367,6 +434,10 @@ function App() {
             <a className="flex min-h-28 items-center gap-3 bg-white/5 p-6 transition hover:bg-white hover:text-zinc-950" href={portfolio.github} target="_blank" rel="noreferrer">
               <Github size={22} />
               <span>github.com/Mayank-0399</span>
+            </a>
+            <a className="flex min-h-28 items-center gap-3 bg-white/5 p-6 transition hover:bg-white hover:text-zinc-950" href={portfolio.contact.linkedin} target="_blank" rel="noreferrer">
+              <Linkedin size={22} />
+              <span>linkedin.com/in/mayanksingh63</span>
             </a>
             <span className="flex min-h-28 items-center gap-3 bg-white/5 p-6">
               <MapPin size={22} />

@@ -16,7 +16,6 @@ export const portfolio = {
     "Python",
     "JavaScript",
     "TypeScript",
-    "Python",
     "REST APIs",
     "Authentication",
     "AI/RAG",
@@ -31,30 +30,24 @@ export const portfolio = {
   },
   projects: [
     {
-      name: "NodeTalk",
-      repo: "NodeTalkApp",
+      name: "SyncSpace",
+      repo: "SyncSpace",
       language: "JavaScript",
-      href: "https://github.com/Mayank-0399/NodeTalkApp",
-      liveUrl: "https://nodetalkapp-3.onrender.com",
+      href: "https://github.com/Mayank-0399/SyncSpace",
+      liveUrl: "https://syncspace.onrender.com",
       image: "https://images.unsplash.com/photo-1654277041218-84424c78f0ae?q=80&w=1162&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       description:
-        "A real-time chat application built with Node.js, Express, Socket.IO, React, MongoDB, JWT authentication, online status, and message history."
+        "A unified realtime chat and demo wallet platform with JWT auth, Socket.IO presence, PostgreSQL persistence, private rooms with admin controls, transaction-safe transfers, and bill splitting."
     },
     {
-      name:"Codeforces",
+      name: "Mini Redis Clone",
+      repo: "MiniRedisClone",
       language: "C++",
-      href: "https://codeforces.com/profile/mayanksingh230651",
-      liveUrl:"",
-      image: "https://images.pexels.com/photos/11035472/pexels-photo-11035472.jpeg",
-      description: "Solved 600+ problems on Arrays, dp, graph strings, constructive algorithms, greedy and participated regularly in contests"
-    },
-    {
-      name:"LeetCode",
-      language: "C++",
-      href: "https://leetcode.com/u/Mayank_2027/",
+      href: "https://github.com/Mayank-0399/MiniRedisClone",
       liveUrl: "",
-      image: "https://images.pexels.com/photos/11035472/pexels-photo-11035472.jpeg",
-      description: "Solved 400+ problems on Arrays, dp, graph strings, constructive algorithms, greedy and participated regularly in contests"
+      image: "https://images.unsplash.com/photo-1654277041218-84424c78f0ae?q=80&w=1162&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      description:
+        "A multi-threaded TCP key-value store in C++ with POSIX sockets, Redis-style commands (SET, GET, DEL, INCR, KEYS, TTL), key expiration, background cleanup, auto-save snapshots, and RESP-like protocol."
     },
 
     {
@@ -62,7 +55,7 @@ export const portfolio = {
       repo: "MonteCarlo-Simulation",
       language: "Python",
       href: "https://github.com/Mayank-0399/MonteCarlo-Simulation",
-      liveUrl: "https://github.com/Mayank-0399/MonteCarlo-Simulation",
+      liveUrl: "",
       image: "https://images.unsplash.com/photo-1654277041218-84424c78f0ae?q=80&w=1162&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       description:
         "A compact Monte Carlo Asian option pricer using historical stock data from yfinance, confidence intervals, convergence CSV exports, plotting, and CLI comparison modes."
