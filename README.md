@@ -14,7 +14,7 @@ Animated personal portfolio inspired by bold retail/editorial layouts, built wit
 npm run install:all
 npm run dev
 ```
-[Live Demo](https://myportfolio-rd55.onrender.com)
+[Live Demo](https://myportfolio-1-crf7.onrender.com/)
 
 
 
