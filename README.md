@@ -1,4 +1,4 @@
-# Mayank Portfolio MERN
+# Mayank Portfolio 
 
 Animated personal portfolio inspired by bold retail/editorial layouts, built with a MERN-style stack:
 
